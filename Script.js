@@ -1,71 +1,66 @@
-const classNames = {
-  TODO_ITEM: "todo-container",
-  TODO_CHECKBOX: "todo-checkbox",
-  TODO_TEXT: "todo-text",
-  TODO_DELETE: "todo-delete"
-};
-
-const list = document.getElementById("todo-list");
-const itemCountSpan = document.getElementById("item-count");
-const uncheckedCountSpan = document.getElementById("unchecked-count");
-
-function newTodo() {
-  const todoText = prompt("TODO text:");
-  console.log(todoText);
-  addToDo(todoText);
+* {
+  box-sizing: border-box;
 }
 
-function getDeleteButton(id) {
-  var deleteButton = document.createElement("button");
-  deleteButton.setAttribute("class", classNames["TODO_DELETE"]);
-  deleteButton.innerText = "Delete";
-  deleteButton.addEventListener("click", function() {
-    itemCountSpan.innerHTML = Number(itemCountSpan.innerHTML) - 1;
-    // only decrement unchec  ked count when todo is not checked
-    if (!document.getElementById("checkbox" + id).checked) {
-      uncheckedCountSpan.innerHTML = Number(uncheckedCountSpan.innerHTML) - 1;
-    }
-    list.removeChild(document.getElementById(id));
-  });
-  return deleteButton;
+html, body {
+  background-color: #eee;
+  margin: 0;
+  padding: 0;
 }
 
-function getCheckbox(id) {
-  var input = document.createElement("input");
-  input.setAttribute("type", "checkbox");
-  input.setAttribute("id", "checkbox" + id);
-  input.setAttribute("class", classNames["TODO_CHECKBOX"]);
-  input.addEventListener("change", function() {
-    if (this.checked) {
-      uncheckedCountSpan.innerHTML = Number(uncheckedCountSpan.innerHTML) - 1;
-    } else {
-      uncheckedCountSpan.innerHTML = Number(uncheckedCountSpan.innerHTML) + 1;
-    }
-  });
-  return input;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
-function getListItem() {
-  var li = document.createElement("li");
-  li.setAttribute("class", classNames["TODO_ITEM"]);
-  var liID = itemCountSpan.innerHTML;
-  li.setAttribute("id", liID);
-  return li;
+.center {
+  align-self: center;
 }
 
-function getSpan(text) {
-  var span = document.createElement("span");
-  span.setAttribute("class", classNames["TODO_TEXT"]);
-  span.innerText = text;
-  return span;
+.flow-right {
+  display: flex;
+  justify-content: space-around;
 }
 
-function addToDo(text) {
-  var li = getListItem();
-  li.appendChild(getCheckbox(li.id));
-  li.appendChild(getSpan(text));
-  li.appendChild(getDeleteButton(li.id));
-  list.appendChild(li);
-  itemCountSpan.innerHTML = Number(itemCountSpan.innerHTML) + 1;
-  uncheckedCountSpan.innerHTML = Number(uncheckedCountSpan.innerHTML) + 1;
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: 100vh;
+}
+
+.title, .controls, .button {
+  flex: none;
+}
+
+.button {
+  padding: 10px 20px;
+}
+
+.todo-list {
+  flex: 1 1 0;
+  margin-top: 20px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.todo-delete {
+  margin: 10px;
+}
+
+.todo-checkbox {
+  margin: 10px;
+}
+
+.todo-container {
+  padding: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.todo-container:first-of-type {
+  border-top: 1px solid #333;
 }
